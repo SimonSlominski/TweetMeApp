@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'tweets',
 ]
 
@@ -130,3 +131,5 @@ STATICFILES_DIRS = [
 
     # will be served
 STATIC_ROOT = os.path.join((BASE_DIR), "static-serve") #CDN content deliver network
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
