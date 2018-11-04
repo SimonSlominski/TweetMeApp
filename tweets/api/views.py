@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from tweets.models import Tweet
 from django.db.models import Q
+from .pagination import StandardResultsSetPagination
 from .serializers import TweetModelSerializer
 
 
@@ -17,6 +18,7 @@ class TweetCreateAPIView(generics.CreateAPIView):
 
 class TweetListAPIView(generics.ListAPIView):
     serializer_class = TweetModelSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         gs = Tweet.objects.all().order_by("-timestamp")
