@@ -5,8 +5,20 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 from .forms import TweetModelForm
 from .mixins import FormUserNeededMixin, UserOwnerMixin
 from .models import Tweet
+from django.views import View
+from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 
 """CRUD = Create, Retrieve, Update, Delete"""
+
+class RetweetView(View):
+    def get(self, request, pk, *args, **kwargs):
+        tweet = get_object_or_404(Tweet, pk=pk)
+        if request.user.is_authenticated():
+            new_tweet = Tweet.objects.retweet(request.user, tweet)
+            return HttpResponseRedirect("/")
+        return HttpResponseRedirect(tweet.get_absolute_url())
+
 
 class TweetCreateView(FormUserNeededMixin, CreateView):
     form_class = TweetModelForm
