@@ -8,6 +8,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
+class LikeToggleAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, pk):
+        tweet_qs = Tweet.objects.filter(pk=pk)
+        message = "Not allowed"
+        if request.user.is_authenticated():
+            is_liked = Tweet.objects.like_toggle(request.user, tweet_qs.first())
+            return Response({'liked': is_liked})
+        return Response({"message": message}, status=400)
+
+
 class RetweetAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, pk, format=None):
@@ -37,14 +48,22 @@ class TweetListAPIView(generics.ListAPIView):
     serializer_class = TweetModelSerializer
     pagination_class = StandardResultsPagination
 
+    def get_serializer_context(self, *args, **kwargs):
+        context = super(TweetListAPIView, self).get_serializer_context(*args, **kwargs)
+        context['request'] = self.request
+        return context
+
     def get_queryset(self, *args, **kwargs):
-        """im_following is variable to show only tweets from user i am following"""
-        im_following = self.request.user.profile.get_following()  # none
-        qs1 = Tweet.objects.filter(user__in=im_following)
-        qs2 = Tweet.objects.filter(user=self.request.user)
-        """ Showing my tweets and tweets from user I am following"""
-        qs = (qs1 | qs2).distinct().order_by("-timestamp")
-        """The other way to sort tweets is to create class Meta: ordering = ['-timestamp'] in models.py + makemigrations/migrate"""
+        requested_user = self.kwargs.get("username")
+
+        if requested_user:
+            qs = Tweet.objects.filter(user__username=requested_user).order_by("-timestamp")
+        else:
+            im_following = self.request.user.profile.get_following()  # none
+            qs1 = Tweet.objects.filter(user__in=im_following)
+            qs2 = Tweet.objects.filter(user=self.request.user)
+            qs = (qs1 | qs2).distinct().order_by("-timestamp")
+
         query = self.request.GET.get("q", None)
         if query is not None:
             qs = qs.filter(
