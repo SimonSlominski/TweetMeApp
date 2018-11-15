@@ -17,7 +17,8 @@ class FormUserNeededMixin(object):
 class UserOwnerMixin(object):
     """This class was created to allow tweets to be edited exclusively by the user"""
     def form_valid(self, form):
-        if form.instance.user == self.request.user: # instance user is equal to requested user! That sth different that is in FormUserNeededMixin
+        if form.instance.user == self.request.user:
+            # instance user is equal to requested user! That sth different that is in FormUserNeededMixin
             return super(UserOwnerMixin, self).form_valid(form)
         else:
             form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(['You are not allowed to change this Tweet.'])

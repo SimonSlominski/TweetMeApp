@@ -6,10 +6,11 @@ from .forms import TweetModelForm
 from .mixins import FormUserNeededMixin, UserOwnerMixin
 from .models import Tweet
 from django.views import View
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 
 """CRUD = Create, Retrieve, Update, Delete"""
+
 
 class RetweetView(View):
     def get(self, request, pk, *args, **kwargs):
@@ -51,7 +52,8 @@ class TweetListView(LoginRequiredMixin, ListView):
         if query is not None:
             gs = gs.filter(
                 Q(content__icontains=query) |
-                Q(user__username__icontains=query) # user__username is accessing the value of "user" attribute of each Tweet instance
+                Q(user__username__icontains=query)
+                # user__username is accessing the value of "user" attribute of each Tweet instance
                 )
         return gs
 
@@ -60,4 +62,3 @@ class TweetListView(LoginRequiredMixin, ListView):
         context['create_form'] = TweetModelForm()
         context['create_url'] = reverse_lazy("tweet:create")
         return context
-

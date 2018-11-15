@@ -1,8 +1,7 @@
 from django.db import models
 from django.urls import reverse_lazy
-# Create your models here.
-
 from tweets.models import Tweet
+
 
 class HashTag(models.Model):
     tag = models.CharField(max_length=120)

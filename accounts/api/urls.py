@@ -1,5 +1,4 @@
 from django.conf.urls import url
-
 from tweets.api.views import TweetListAPIView
 
 urlpatterns = [

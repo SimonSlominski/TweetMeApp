@@ -5,30 +5,30 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
-    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
 
     <!-- ERROR = "TypeError: $.ajax(…) is not a function?"
-    Double-check if you're using full-version of jquery and not some slim version.
+    Double-check if you're using full-version of jquery and not some slim version!
 
-    I was using the jquery cdn-script link that comes with jquery. The problem is this one by default is slim.jquery.js which doesn't have the ajax function in it.
-    So, if you're using (copy-pasted from Bootstrap website) slim version jquery script link, use the full version instead.
-    BELOW = script from BootstrapCDN. Line below is correct script from "https://code.jquery.com/"
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    I was using the jquery cdn-script link that comes with jquery. The problem is this one by default is slim.jquery.js
+    which doesn't have the ajax function in it. So, if you're using (copy-pasted from Bootstrap website)
+    slim version jquery script link, use the full version instead. -->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 
     <title>{% block title %} TweetMeApp.com {% endblock title %}</title>
-
 
     <style>
     .red-color {
@@ -39,8 +39,8 @@
     }
     </style>
     </head>
-    <body>
 
+    <body>
     {% include "navbar.html" %}
 
     <div class="container">
@@ -49,7 +49,6 @@
     </div>
 
     {% include "reply-modal.html" %}
-
 
 
     <script>
@@ -155,9 +154,10 @@ function loadTweetContainer(tweetContainerID){
       var tweetContent;
       var isReply = tweetValue.reply;
       if (tweetValue.parent && !isReply) {
-        // there is a retwet
+        // there is a retweet
         tweetValue = tweetValue.parent
-         preContent = "<span class='grey-color'>Retweet via " + tweetValue.user.username +" on " + tweetValue.date_display + "</span><br/>"
+         preContent = "<span class='grey-color'>Retweet via " + tweetValue.user.username +" on " +
+             tweetValue.date_display + "</span><br/>"
       } else if (tweetValue.parent && isReply) {
          preContent = "<span class='grey-color'>Reply to @" + tweetValue.parent.user.username +  "</span><br/>"
       }
@@ -166,7 +166,14 @@ function loadTweetContainer(tweetContainerID){
           verb = 'Unlike'
       }
 
-      tweetContent = "<span class='content'>" + tweetValue.content + "</span><br/> via <a href='" + tweetValue.user.url + "'>" + tweetValue.user.username + "</a> | " + tweetValue.date_display + " | " + "<a href='/tweet/" + tweetValue.id + "'>View</a> | " + "<a class='retweetBtn' href='/tweet/" + tweetValue.id + "/retweet/'>Retweet</a>" + " | <a href='#' class='tweet-like' data-id='" + tweetValue.id + "''>" + verb + " (" + tweetValue.likes + ")</a>" + " | <a href='#' class='tweet-reply' data-user='" + tweetValue.user.username + "' data-id='" + tweetValue.id + "''>Reply</a>"
+      tweetContent = "<span class='content'>" + tweetValue.content + "</span><br/> via <a href='" +
+          tweetValue.user.url + "'>" + tweetValue.user.username + "</a> | " + tweetValue.date_display + " | " +
+          "<a href='/tweet/" + tweetValue.id + "'>View</a> | " + "<a class='retweetBtn' href='/tweet/" +
+          tweetValue.id + "/retweet/'>Retweet</a>" + " | <a href='#' class='tweet-like' data-id='" +
+          tweetValue.id + "''>" + verb + " (" + tweetValue.likes + ")</a>" +
+          " | <a href='#' class='tweet-reply' data-user='" + tweetValue.user.username +
+          "' data-id='" + tweetValue.id + "''>Reply</a>"
+
       if (preContent){
            container= "<div class=\"media\"><div class=\"media-body\">" + preContent + tweetContent + "</div></div><hr/>"
       } else {
@@ -214,7 +221,6 @@ function loadTweetContainer(tweetContainerID){
       },
       method: "GET",
       success: function(data){
-        // console.log(data)
         tweetList = data.results
         if (data.next){
           nextTweetUrl = data.next
@@ -237,7 +243,6 @@ function loadTweetContainer(tweetContainerID){
       if (nextTweetUrl) {
         fetchTweets(nextTweetUrl)
       }
-      // load more items
   })
 
   var charsStart = 140;
@@ -319,6 +324,8 @@ function loadTweetContainer(tweetContainerID){
       })
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
   </body>
 </html>
